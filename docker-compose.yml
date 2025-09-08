@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: github_analytics_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: github_analytics_user
+      POSTGRES_PASSWORD: github_analytics_password
+      POSTGRES_DB: github_analytics_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U github_analytics_user -d github_analytics_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
