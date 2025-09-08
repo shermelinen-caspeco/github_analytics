@@ -1,38 +1,338 @@
-.App {
-  text-align: center;
+/* Grafana-inspired color scheme and styling */
+:root {
+  --grafana-bg-primary: #0f1419;
+  --grafana-bg-secondary: #181b1f;
+  --grafana-bg-panel: #1f2329;
+  --grafana-border: #2a3441;
+  --grafana-text-primary: #d9d9d9;
+  --grafana-text-secondary: #a7b6c2;
+  --grafana-text-muted: #6c7b7f;
+  --grafana-orange: #ff7043;
+  --grafana-blue: #00bcd4;
+  --grafana-green: #73bf69;
+  --grafana-red: #f44336;
+  --grafana-yellow: #ffab00;
+  --grafana-purple: #9c27b0;
+  --grafana-sidebar: #161719;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--grafana-bg-primary);
+  color: var(--grafana-text-primary);
+  line-height: 1.5;
 }
 
-.App-header {
-  background-color: #282c34;
+.grafana-app {
   min-height: 100vh;
+  background-color: var(--grafana-bg-primary);
   display: flex;
   flex-direction: column;
+}
+
+.grafana-header {
+  background-color: var(--grafana-bg-secondary);
+  border-bottom: 1px solid var(--grafana-border);
+  padding: 0 24px;
+  height: 52px;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.grafana-header h1 {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--grafana-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grafana-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--grafana-orange);
+}
+
+.grafana-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 24px;
+}
+
+.grafana-dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.grafana-dashboard-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--grafana-text-primary);
+  margin: 0;
+}
+
+.grafana-dashboard-controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.grafana-tab-container {
+  background-color: var(--grafana-bg-secondary);
+  border-radius: 6px;
+  padding: 4px;
+  display: flex;
+  gap: 2px;
+}
+
+.grafana-tab {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  color: var(--grafana-text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.grafana-tab:hover {
+  background-color: var(--grafana-bg-primary);
+  color: var(--grafana-text-primary);
+}
+
+.grafana-tab.active {
+  background-color: var(--grafana-blue);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.grafana-tab-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 600;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.grafana-dashboard-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.grafana-panel {
+  background-color: var(--grafana-bg-panel);
+  border: 1px solid var(--grafana-border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.grafana-panel:hover {
+  border-color: var(--grafana-blue);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.grafana-panel-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--grafana-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--grafana-bg-secondary);
+}
+
+.grafana-panel-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grafana-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.grafana-panel-content {
+  padding: 16px;
+}
+
+.grafana-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.grafana-metric {
+  text-align: center;
+  padding: 8px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.grafana-metric-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--grafana-text-primary);
+  margin-bottom: 2px;
+}
+
+.grafana-metric-label {
+  font-size: 11px;
+  color: var(--grafana-text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.grafana-repo-description {
+  font-size: 13px;
+  color: var(--grafana-text-secondary);
+  margin: 8px 0 12px 0;
+  line-height: 1.4;
+}
+
+.grafana-repo-link {
+  color: var(--grafana-blue);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.grafana-repo-link:hover {
+  color: var(--grafana-orange);
+}
+
+.grafana-status-badge {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.grafana-status-private {
+  background-color: rgba(255, 112, 67, 0.2);
+  color: var(--grafana-orange);
+  border: 1px solid rgba(255, 112, 67, 0.3);
+}
+
+.grafana-status-public {
+  background-color: rgba(115, 191, 105, 0.2);
+  color: var(--grafana-green);
+  border: 1px solid rgba(115, 191, 105, 0.3);
+}
+
+.grafana-user-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.grafana-user-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid var(--grafana-blue);
+  margin-bottom: 12px;
+}
+
+.grafana-user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--grafana-text-primary);
+  margin-bottom: 4px;
+}
+
+.grafana-user-type {
+  font-size: 11px;
+  color: var(--grafana-text-muted);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.grafana-user-admin {
+  color: var(--grafana-red);
+}
+
+.grafana-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--grafana-text-secondary);
+}
+
+.grafana-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 6px;
+  padding: 16px;
+  color: var(--grafana-red);
+  margin: 16px 0;
+}
+
+.grafana-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.grafana-stats-panel {
+  background-color: var(--grafana-bg-panel);
+  border: 1px solid var(--grafana-border);
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+}
+
+.grafana-stats-value {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--grafana-blue);
+  margin-bottom: 4px;
+}
+
+.grafana-stats-label {
+  font-size: 14px;
+  color: var(--grafana-text-secondary);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .grafana-main {
+    padding: 12px 16px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .grafana-dashboard-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .grafana-stats-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 }
